@@ -33,7 +33,7 @@ The simplest way to create a binding is to simply specify two Bindable objects a
 
 This will establish a two-way binding between the "baz" property on Foo and the "quux" property on Bar.
 
-This binding doesn't change the initial values of either of your instances. Generally you will want to initialize one of the other of these classes with the value from the other. To do this, you should invoke the set*() methods on the Binding. For instance. To copy the "quux" value from bar to foo you would invoke:
+This binding doesn't change the initial values of either of your instances. Generally you will want to initialize one of the other of these classes with the value from the other. To do this, you should invoke the set() methods on the Binding. For instance. To copy the "quux" value from bar to foo you would invoke:
 
 {{{
    b.setLeft();
