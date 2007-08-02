@@ -1,0 +1,99 @@
+#labels Featured
+#A look at Gwittir's data-binding system.
+
+= Introduction =
+
+Of course, once the GWT Introspection system was in place, the next step is to come up with a binding framework. One of the great problems with building GWT applications is dealing with a great number of Listeners to handle simple binding for widgets. Gwittir provides a shorthand way for doing this.
+
+
+= Requirements for Binding =
+
+The simplest way to to enable Binding on your classes is to implement the com.totsp.gwittir.beans.Bindable interface. This interface defines, simply:
+
+{{{
+public interface Bindable extends SourcesPropertyChangeEvents, Introspectable {
+}
+}}}
+
+For PropertyChangeSupport and Events, please see the [http://code.google.com/p/gwtx GWTx] project.
+
+= Creating Bindings =
+
+The simplest way to create a binding is to simply specify two Bindable objects and create a Binding class specifying the property names:
+
+{{{
+
+  Foo foo = new Foo();
+  Bar bar = new Bar();
+
+  Binding b = new Binding( foo, "baz", bar, "quux" );
+
+  b.bind();
+}}}
+
+This will establish a two-way binding between the "baz" property on Foo and the "quux" property on Bar.
+
+This binding doesn't change the initial values of either of your instances. Generally you will want to initialize one of the other of these classes with the value from the other. To do this, you should invoke the set*() methods on the Binding. For instance. To copy the "quux" value from bar to foo you would invoke:
+
+{{{
+   b.setLeft();
+}}}
+
+The "Left" and "Right" notations are simply based on the order in which the objects were passed into the constructor.
+
+The Binding object also has a List of Child bindings that can be controlled with the single instance. This is useful when you need to manage multiple bindings at the same time. For example:
+
+{{{
+
+  Foo foo = new Foo();
+  Bar bar = new Bar();
+  
+  Binding b = new Binding();
+  b.getChildren.add( new Binding( foo, "property1", bar, "propertyOne" );
+  b.getChildren.add( new Binding( foo, "property2", bar, "propertyTwo" );
+  
+  b.setLeft();
+  b.bind();
+}}}
+
+Actions will now cascade into the the child bindings. This allows you to easily clean up listeners and release bindings.
+
+You can also specify Converter implementation to adapt properties between differing types. The Converter interface is very simple:
+
+{{{
+public interface Converter {
+    Object convert(Object original);
+}
+}}}
+
+When constructing a Binding object, you can pass in a Converter that can be used to adapt an object to the correct format or type.
+
+{{{
+
+  Converter toStringConverter = new Converter(){
+     public Object convert(Object original){
+         return original = null ? null : original.toString();
+     }
+  };
+
+  Converter toIntegerConverter = new Converter(){
+     public Object convert(Object original){
+         return original == null ? new Integer(0) : Integer.valueOf( original.toString() );
+     }
+  }
+
+  Binding b = new Binding( foo, "stringProperty", toStringConverter,
+                           bar, "integerProperty", toIntegerConverter );
+
+  b.bind();
+
+}}}
+
+
+Converters are useful for basic conversion, but many times you want to validate a value and provide user feedback. The binding supports this as well.
+
+
+
+= Validation Bindings =
+
+TODO: finish this.
