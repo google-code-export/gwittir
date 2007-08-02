@@ -22,7 +22,7 @@ Once this is done, you can use the Introspector to find properties on your beans
     // Property property = bd.getProperty("propertyName");
 }}}
 
-    The Property method has getters on it for:
+    The Property object has getters on it for:
  * accessorMethod
  * mutatorMethod
  * type
