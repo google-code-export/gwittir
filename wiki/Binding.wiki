@@ -141,8 +141,8 @@ For example:
 
 {{{
     CompositeValidator cv = new CompositeValidator()
-        .add(new NotNullValidator())
-        .add(new IntegerValidator())
+        .add(NotNullValidator.INSTANCE)       // validators that don't have state
+        .add(IntegerValidator.INSTANCE)       // are treated as public static final
         .add(new IntegerRangeValidator(1, 5));
 
 }}}
