@@ -49,8 +49,8 @@ The Binding object also has a List of Child bindings that can be controlled with
   Bar bar = new Bar();
   
   Binding b = new Binding();
-  b.getChildren.add( new Binding( foo, "property1", bar, "propertyOne" );
-  b.getChildren.add( new Binding( foo, "property2", bar, "propertyTwo" );
+  b.getChildren.add( new Binding( foo, "property1", bar, "propertyOne" ) );
+  b.getChildren.add( new Binding( foo, "property2", bar, "propertyTwo" ) );
   
   b.setLeft();
   b.bind();
