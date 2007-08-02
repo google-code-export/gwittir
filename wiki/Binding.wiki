@@ -94,6 +94,130 @@ Converters are useful for basic conversion, but many times you want to validate 
 
 
 
-= Validation Bindings =
+= Validators =
 
-TODO: finish this.
+Validation is a two step process. The first involves validating data, the second is displaying errors to the user. For validating data, the key interface is the Validator. This looks very much like the converter interface, but can also throw a ValidationException.
+
+{{{
+
+public interface Validator {
+    public Object validate(Object value) throws ValidationException;
+}
+
+}}}
+
+Unlike the Converter, which returns an object suitable for the bean it is associated with -- as above, where the "stringProperty" is associated with the toStringConverter, a Validator returns an object sutable for the DESTINATION property.
+
+So, for instance, the IntegerValidator looks like:
+
+{{{
+
+ public Object validate(Object value) throws ValidationException {
+        
+        if(value == null || value instanceof Integer) {
+            return value;
+        }
+
+        Integer i;
+
+        try {
+            i = Integer.valueOf(value.toString());
+        } catch(NumberFormatException nfe) {
+            GWT.log(null, nfe);
+            throw new ValidationException("Must be an integer value.",
+                IntegerValidator.class);
+        }
+
+        return i;
+    }
+}}}
+
+Notice that null is a default passthrough for the Validator. We will come back to that. Here we try and create the Integer. If we cannot, we throw a ValidatorException, passing in the Validator class that failed. Otherwise, we return the Integer object.
+
+
+Validators like this can be useful, but seem very simplistic. The goal of the built in Validators is to provide very basic operations, but you can create more complex validation rules by using the CompositeValidator. This class lets you chain multiple validators together.
+
+For example:
+
+{{{
+    CompositeValidator cv = new CompositeValidator()
+        .add(new NotNullValidator())
+        .add(new IntegerValidator())
+        .add(new IntegerRangeValidator(1, 5));
+
+}}}
+
+Here we create a new CompositeValidator, and add a chain of 3 validators to it. Now we can validate that a property is "Not Null", "An Integer" and "Between 1 and 5 inclusive."
+
+
+= ValidationFeedback =
+
+
+Once you are validating code, you need to provide feedback to the user that a validation error has occurred. This is where the ValidationFeedback inteface comes in. This is, once again, a very simple interface:
+
+{{{
+public interface ValidationFeedback {
+    public void handleException(Object source, ValidationException exception);
+    public void resolve(Object source);
+}
+}}}
+
+When a validation exception is thrown, the Binding will pass the source object of the exception and the exception itself to the handleException() method. When the state of the object changes again, it will call resolve(). This is the VF implementations cue to clean up whatever it has done.
+
+Gwittir includes several ValidationFeedback implementations. A good example is the PopupValidationFeedback class. This will create a PopupPanel with a message in it, positioned next to the "source" object, generally a widget.
+
+{{{
+
+ ValidationFeedback pvf =
+                new PopupValidationFeedback(PopupValidationFeedback.BOTTOM)
+                .addMessage(NotNullValidator.class,
+                "You must provide a value")
+                .addMessage(IntegerValidator.class,
+                "Enter an integer")
+                .addMessage(IntegerRangeValidator.class,
+                "Value must be 1..5");
+
+}}}
+
+Here we have created a PopupValidationFeedback object, positioned BOTTOM, or below the widget that caused the exception. Next we add messages, associated with the Validator classes we created above to the PVF. These determine the message that will be displayed when an exception is thrown from a specific Valdiator implementation.
+
+Now we can create a Binding using the CompositeValidator and the PopupValidationFeedback objects:
+
+{{{
+   TextBox intBox = new TextBox();
+   Binding b2 = new Binding(intBox, "value", cv, pvf,            
+                            bar, "integerProperty", null, null);
+}}}
+
+With this binding, we specify we are binding to the "value" property of the TextBox (more on this in the next section), we pass in the Validator and the ValidationFeedback implemetations, and the target object, our Bar class from above. Since we don't feed the need to validate the data coming from Bar before we put it into the text box, we simply pass in nulls for the right-size validation arguments.
+
+Just as with the validation, we provide a CompositeValidationFeedback class so you can chain multiple VFs together.
+
+{{{
+  CompositeValidationFeedback cvf = new CompositeValidationFeedback()
+        .add(pvf)
+        .add(new StyleValidationFeedback("validation-error"));
+
+}}} 
+
+Here we have created a composite using the PopupValidationFeedback from above, and added a "StyleValidationFeedback". This will "add" a style name on the Object that cause the validation exception. You can then use the CSS to mark the widget that is invalid, as well as get the Popup below it.
+
+{{{
+.validation-error {
+    color: red;
+    background-color: white;
+    border: 1px dotted red;
+}
+}}}
+
+
+Finally, each Binding can be checked quickly for validity by calling isValid(). This will check the validity on this binding and all children. This can be used as a final check before moving your application to the next state, or sending a bound model object off to a remote service.
+
+
+You can also use Validators in combination with a Converter, though the need to do so is rare. In this case, the converter will be used for data coming INTO the bound object and the validator for data LEAVING the bound object for it's target partner.
+
+
+= BoundWidgets =
+
+
+TODO finish this.
