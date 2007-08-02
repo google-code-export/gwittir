@@ -170,12 +170,9 @@ Gwittir includes several ValidationFeedback implementations. A good example is t
 
  ValidationFeedback pvf =
                 new PopupValidationFeedback(PopupValidationFeedback.BOTTOM)
-                .addMessage(NotNullValidator.class,
-                "You must provide a value")
-                .addMessage(IntegerValidator.class,
-                "Enter an integer")
-                .addMessage(IntegerRangeValidator.class,
-                "Value must be 1..5");
+                .addMessage(NotNullValidator.class, "You must provide a value")
+                .addMessage(IntegerValidator.class, "Enter an integer")
+                .addMessage(IntegerRangeValidator.class, "Value must be 1..5");
 
 }}}
 
