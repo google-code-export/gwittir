@@ -216,5 +216,22 @@ You can also use Validators in combination with a Converter, though the need to 
 
 = BoundWidgets =
 
+BoundWidgets are a concept specific to Gwittir. These are, in effect, regular GWT widgets that support some common interface conventions to make them easier to work with. This ease of use, however, can come with a certain level of complexity, due to the generic nature of the bound widget.
 
-TODO finish this.
+BoundWidgets support 3 main properties:
+
+ * model This contains YOUR model object, typically a business class of some kind. The model is really just a placeholder property.
+ * value This is the raw value of the widget. The type of this value will vary from widget to widget. For a Composite bound widget for working with a business object, it may simply be the same as the model. For Collection-based bound widgets, like the ListBox or the BoundTable, this can be a collection of business objects. For simple types like TextBox or Checkbox, this will be a String or boolean value directly. The idea here is that when you are Binding the BoundWidget, you are usually binding to the "value" property.
+ * action This is the Controller for the bound widget. The most basic Action interface simply defines an "execute()" method. This method will be called on whatever the generally accepted "default" action of a BoundWidget might be... A Button, for instance, will call it on a Click event. A Checkbox in the change event, etc. This lets you keep your code generic enough to reuse business logic based on the context.
+
+BoundWidgets also have 2 other properties that may, or may not, be used by various implementations. They are...
+
+ * renderer This takes a business object and "renders" it to a form suitable for the Widget. For instance, you might have a Collection of Person objects going into a ListBox. The list box will use its renderer to determine the text that will appear in the options. You can then provide a renderer that will return: person.getLastName()+", "+person.getFirstName(). Unlike Swing, which always uses toString() for this kind of operation, you can customize this. BoundWidgets should provide a default implementation that is "good enough" -- such as a simple .toString() call -- so you should only have to use this when you really want to.
+ * comparator This is used to compare value objects. Especially if you are dealing with objects that might have come from a server at different times or in different states, being able to say "id equality is OK here, but not here" is handy. Some widgets also use comparators for sorting operations. Again, most widgets will provide a default implementation that should be good enough for most uses.
+
+Obviously, because we want to do Binding with BoundWidgets, they all implement the Bindable interface.
+
+
+= BindingActions =
+
+TODO
