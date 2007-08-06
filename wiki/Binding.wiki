@@ -96,7 +96,7 @@ Converters are useful for basic conversion, but many times you want to validate 
 
 = Validators =
 
-Validation is a two step process. The first involves validating data, the second is displaying errors to the user. For validating data, the key interface is the Validator. This looks very much like the converter interface, but can also throw a ValidationException.
+Validation is a two step process. The first involves validating data, the second is displaying errors to the user. For validating data, the key interface is the Validator. This looks very much like the Converter interface, but can also throw a ValidationException.
 
 {{{
 
