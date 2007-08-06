@@ -39,7 +39,7 @@ public interface Method {
 }
 }}}
 
-Note the invoke() method simply throws Exception. It will simply pass on any exceptions thrown by the invokation, and will not wrap it in another exception class.
+Note the invoke() method simply throws Exception. It will simply pass on any exceptions thrown by the invocation, and will not wrap it in another exception class.
 
 The Type property is an instance of the GWT restricted [Type].class reference. This is really only good for equality checks with other [Type].class associations.
 
