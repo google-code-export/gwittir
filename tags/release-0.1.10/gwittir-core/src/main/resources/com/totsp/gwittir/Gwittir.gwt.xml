@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<module>
+    <!-- Inherit the core Web Toolkit stuff.                  -->
+    <inherits name='com.google.gwt.user.User'/>
+    <source path="client" />
+    <stylesheet src="gwittir.css"/>
+    <generate-with
+        class="com.totsp.gwittir.rebind.beans.IntrospectorGenerator" >
+        <when-type-assignable
+            class="com.totsp.gwittir.client.beans.Introspector" />
+    </generate-with>
+    <replace-with
+        class="com.totsp.gwittir.client.fx.rebind.OpacitySetterIE6">
+        <when-type-is 
+            class="com.totsp.gwittir.client.fx.rebind.OpacitySetter" />
+        <when-property-is name="user.agent" value="ie6"/>
+    </replace-with>
+</module>
