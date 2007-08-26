@@ -8,7 +8,7 @@ The only reason Gwittir is a GWT library and not a Swing library is we like GWT 
 
 = Self-Similarity =
 
-One of the problems with most UI toolkits is you have to know exactly what kind of widget you are working with at a pretty fundamental level in your code. Things like ListBoxes in JavaScript or Swing have their own usage patterns and require a lot of support code to map to your object model. Evening varies from type to type and usually requires setting up listeners and dealing with a TON of housekeeping to clean them up where appropriate. To address this, all Gwittir components support a common API scheme, and 5 properties:
+One of the problems with most UI toolkits is you have to know exactly what kind of widget you are working with at a pretty fundamental level in your code. Things like ListBoxes in JavaScript or Swing have their own usage patterns and require a lot of support code to map to your object model. Eventing varies from type to type and usually requires setting up listeners and dealing with a TON of housekeeping to clean them up where appropriate. To address this, all Gwittir components support a common API scheme, and 5 properties:
 
  * model Which is simply a holder for your business object that the component relates to.
  * value Which is the raw value of the widget. This might be a Boolean for a checkbox, a String for a text box or a business object itself for a list box. The point is, you can bind the value property on a Gwittir widget directly to a property on a business object no matter what.
@@ -52,4 +52,3 @@ Many classes represent a composition of other objects. With these, the Builder p
             .add( NotNullValidator.INSTANCE )
             .add( IntegerValidator.INSTANCE );
 }}}
-
