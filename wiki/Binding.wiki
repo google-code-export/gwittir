@@ -234,4 +234,72 @@ Obviously, because we want to do Binding with BoundWidgets, they all implement t
 
 = BindingActions =
 
-TODO
+The most common type of Action you will use is the BindingAction. In addition to .execute(), the BindingAction contains 3 methods that represent the lifecycle of a BoundWidget on the screen.
+
+ * set : This should set the initial values of a component to the values of the business object.
+ * bind : This establishes bindings between the two. 
+ * unbind : This breaks the bindings and should clean up listeners.
+
+These methods are called, generally, in this order and represent the attach/detach lifecycle of an object. Since each of these methods takes a BoundWidget as an argument, you are working with the .getModel() object as the binding target.
+
+Lets look at an example:
+{{{
+public class AddressEditAction implements BindingAction {
+    
+    private Binding binding = new Binding();             // this is a parent binding
+                                                         // we will use this just for 
+                                                         // lifecycle.
+    /** Creates a new instance of AddressEditAction */
+    public AddressEditAction() {
+
+    }
+
+    public void unbind(BoundWidget widget) {             // To unbind, we should clean
+        binding.unbind();                                // up everything we can. unbind()
+        binding.getChildren().clear();                   // removes all listeners 
+    }                                                    // recursively. clear() cleans up
+                                                         // child bindings.
+
+    public void bind(BoundWidget widget) {
+        binding.bind();                                  // this is easy!
+    }
+
+    public void set(BoundWidget widget) {
+        Address a = (Address) widget.getModel();
+        AddressEdit e = (AddressEdit) widget;
+        // here we are going to add a child binding to the "value" on each Gwittir
+        // widget to the appropriate property on our business object.
+        binding.getChildren().add( new Binding(e.address1, "value", a, "address1" ));
+        binding.getChildren().add( new Binding(e.address2, "value", a, "address2" ));
+        binding.getChildren().add( new Binding(e.city, "value", a, "city" ));
+        binding.getChildren().add( new Binding(e.state, "value",  a, "state" ));
+        binding.getChildren().add( new Binding(e.zip, "value", a, "zip" ));
+        binding.getChildren().add( new Binding(e.type, "value",  a, "type" ));
+        // Now we are going to set all the Gwittir Widgets values to the values on the 
+        // business object.
+        binding.setLeft();
+   
+        // Now we are going to configure renderers and comparators. We just want the
+        // "name" attribute to be the text value in the list box.
+        e.state.setRenderer( new Renderer(){
+            public Object render(Object o) {
+                return ((StateLookup) o).name;
+            }
+            
+        });
+        // And we want to compare the "id" property to determine if they are the same
+        // from the database.
+        e.state.setComparator( new Comparator(){
+            public int compare(Object o, Object c ) {
+                return ((StateLookup) o).id.compareTo( ((StateLookup) c).id );
+            }
+            
+        });
+        
+    }
+
+    public void execute(BoundWidget model) {                    
+       // This widget doesn't have an execute. That will likely come from a parent who
+       // has a call to a "save" service.
+    }
+}}}
