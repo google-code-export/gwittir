@@ -4,8 +4,8 @@
 	<pomVersion>3</pomVersion>
 	<artifactId>gwittir-core-sample</artifactId>
 	<groupId>com.totsp.gwittir</groupId>
-	<currentVersion>1.0-SNAPSHOT</currentVersion>
-	<name>Gwittir Core Example</name>
+	<currentVersion>1.0.1-SNAPSHOT</currentVersion>
+	<name>Gwittir Core Sample</name>
 	<package>com.totsp.gwittir.example</package>
 	<logo>/images/logo.gif</logo>
 	<inceptionYear>2007</inceptionYear>
@@ -14,6 +14,10 @@
 			<name>Robert Cooper</name>
 			<email>robert.cooper@manheim.com</email>
 			<organization>Manheim</organization>
+			<timezone>EST</timezone>
+		</developer>
+		<developer>
+			<name>Charlie Collins</name>
 			<timezone>EST</timezone>
 		</developer>
 	</developers>
@@ -194,7 +198,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-user</artifactId>
-			<version>1.4.10</version>
+			<version>1.4.60</version>
 			<type>jar</type>
 			<properties>
 				<war.bundle>true</war.bundle>
@@ -203,7 +207,7 @@
 		<dependency>
 			<groupId>com.google.gwt</groupId>
 			<artifactId>gwt-servlet</artifactId>
-			<version>1.4.10</version>
+			<version>1.4.60</version>
 			<type>jar</type>
 			<properties>
 				<war.bundle>true</war.bundle>
@@ -213,7 +217,7 @@
 		<dependency>
 			<groupId>com.totsp.gwittir</groupId>
 			<artifactId>gwittir-core</artifactId>
-			<version>0.1.15</version>
+			<version>0.1.18</version>
 			<type>jar</type>
 			<properties>
 				<war.bundle>true</war.bundle>
@@ -264,7 +268,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.1</version>
 		</dependency>
 
 		<!--  plugins -->
@@ -279,7 +283,7 @@
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
-		<unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+		<unitTestSourceDirectory>src/test/java</unitTestSourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
