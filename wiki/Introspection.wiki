@@ -1,5 +1,5 @@
+#summary Introduction to Gwittir's Introspector/Reflection Implementation
 #labels Featured,Documentation-Intro
-#Introduction to Gwittir's Introspector Implementation
 
 = Introduction =
 
