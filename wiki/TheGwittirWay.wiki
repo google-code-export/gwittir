@@ -1,5 +1,5 @@
+#summary This document represents our philosophy of design for Gwittir.
 #labels Featured
-#This document represents our philosophy of design for Gwittir.
 
 = Introduction =
 
