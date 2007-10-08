@@ -1,5 +1,5 @@
+#summary A look at Gwittir's data-binding system.
 #labels Featured,Documentation-Intro
-#A look at Gwittir's data-binding system.
 
 = Introduction =
 
