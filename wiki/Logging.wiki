@@ -1,5 +1,5 @@
+#summary An introduction to the Gwittir logging API.
 #labels Documentation-Intro,Featured
-#An introduction to the Gwittir logging API.
 
 = Introduction =
 
