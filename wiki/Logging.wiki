@@ -20,7 +20,7 @@ Typical usage would be in the form of:
     private Logger log = Logger.getLogger("com.my.package.log.Name");
    //...
 
-    log.log(Level.WARN, "An exception was thrown!, exception);
+    log.log(Level.WARN, "An exception was thrown!", exception);
 }}}
 
 A few things to keep in mind:
