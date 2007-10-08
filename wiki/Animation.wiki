@@ -1,5 +1,5 @@
+#summary A look at the Gwittir Animation API
 #labels Documentation-Intro,Featured
-#A look at the Gwittir Animation API
 
 = Introduction =
 
