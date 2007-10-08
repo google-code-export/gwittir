@@ -32,10 +32,11 @@ TODO
 
 
  * action : This package defines the interfaces for actions in Gwittir as above.
- * beans : This package contains the client-side Introspection API.
+ * beans : This package contains the client-side [Introspection] API.
  * flow : This package contains information related to multi-widget flows within page areas
- * fx : This package contains classes for doing Animations and other "special effects" in your applicaiton.
+ * fx : This package contains classes for doing [Animation]s and other "special effects" in your applicaiton.
  * fx.ui : This package contains pre-built UI elements that use the fx. classes to create on-screen effects.
+ * log : This package contains the Gwittir [Logging] system.
  * ui : This package contains the Gwittir-patterned UI elements.
  * ui.table : This package contains complex widgets for working with collection tables and tabular forms.
  * ui.util : This package contains utility classes for use by UI elements, including the very important BoundWidgetTypeFactory and BoundWidgetProvider classes.
