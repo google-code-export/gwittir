@@ -14,6 +14,12 @@ The logging system also defined a new property: log.level. This is defined for t
 
 = Usage = 
 
+First, you need to inherit the logging module:
+{{{
+   <inherits name="com.totsp.gwittir.Logging"/>
+}}}
+
+
 Typical usage would be in the form of:
 
 {{{
@@ -27,6 +33,18 @@ A few things to keep in mind:
  * Full stack information is unavailable outside the GWT Shell. If you are wanting to debug deployed JavaScript, make sure your exception catching is fine grained enough to give you useful information.
  * There is no handling of failed calls to the logging RPC service right now. If the Logger fails a call to the remote service, it will die silently. At some point we may provide queuing of messages or Gears-based persistence of messages to ensure delivery. For now, the short version is, don't make this a business level system.
  * If you are not using GWT-Maven or similar tool to automatically mount service servlets, you need to make sure the com.totsp.gwittir.service.LogServiceServlet gets registered to [ModuleName]/LogService in your web.xml file.
+
+Using the runtime log level configuration can significantly slow your compile time, as a version must be compiled for each log level. To reduce this, there are specific level module files you can include that will specify the log level at build time, and this cut the compile speed.
+
+To use this, include ONE and ONLY ONE of the following:
+{{{
+   <inherits name="com.totsp.gwittir.LoggingInfo"/> 
+}}} 
+for info level or better, or 
+{{{
+   <inherits name="com.totsp.gwittir.LoggingWarn"/>
+}}}
+for warn level or better.
 
 
 = Future Considerations =
