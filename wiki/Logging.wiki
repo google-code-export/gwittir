@@ -3,7 +3,7 @@
 
 = Introduction =
 
-GWT includes basic logging, but GWT.log() is only really good for development time logging. When you start building applications, there are times you will need more than this. It also helps to have a logging system that can carry all the way through to the JavaScript so you can capture logging messages from staging and production environments. To that end, Gwittir provides its own logging syste,
+GWT includes basic logging, but GWT.log() is only really good for development time logging. When you start building applications, there are times you will need more than this. It also helps to have a logging system that can carry all the way through to the JavaScript so you can capture logging messages from staging and production environments. To that end, Gwittir provides its own logging system.
 
 
 = How it Works =
