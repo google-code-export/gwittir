@@ -2,10 +2,21 @@
 #labels Featured,Documentation-Intro
 = Introduction =
 
-One thing that is a must-have for a good web application is providing keyboard support. While the basic access key support in GWT matches what browsers normally do for keyboard support, it doesn't really match what you expect in a true rich application. To that end, Gwittir includes its own keyboard support system
+One thing that is a must-have for a good web application is providing keyboard support. While the basic access key support in GWT matches what browsers normally do for keyboard support, it doesn't really match what you expect in a true rich application. To that end, Gwittir includes its own keyboard support system.
 
 
- es for KeyBinding.F1..KeyBinding.F12. The modifiers should be fairly obvious.
+
+= KeyBindings and the KeyboardController =
+
+The basics of keyboard support come from the KeyBinding and KeyboardController classes. KeyBinding is simply a reference class that refers to a mapped combo.  The constructor is fairly self-evident:
+
+{{{
+public KeyBinding(
+        final char key, final boolean control, final boolean alt,
+        final boolean shift)
+}}}
+
+The key value should generally be an *uppercase* A..Z|0..9 character, or one of the special values for KeyBinding.F1..KeyBinding.F12. The modifiers should be fairly obvious.
 
 You can use a KeyBinding to register an operation with the KeyboardController class. This is a singleton class that manages the current bindings in your application. It has several methods that are also pretty clear:
 
