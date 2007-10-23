@@ -5,17 +5,7 @@
 One thing that is a must-have for a good web application is providing keyboard support. While the basic access key support in GWT matches what browsers normally do for keyboard support, it doesn't really match what you expect in a true rich application. To that end, Gwittir includes its own keyboard support system
 
 
-= KeyBindings and the KeyboardController =
-
-The basics of keyboard support come from the KeyBinding and KeyboardController classes. KeyBinding is simply a reference class that refers to a mapped combo.  The constructor is fairly self-evident:
-
-{{{
-public KeyBinding(
-        final char key, final boolean control, final boolean alt,
-        final boolean shift)
-}}}
-
-The key value should generally be an *uppercase* A..Z|0..9 character, or one of the special values for KeyBinding.F1..KeyBinding.F12. The modifiers should be fairly obvious.
+ es for KeyBinding.F1..KeyBinding.F12. The modifiers should be fairly obvious.
 
 You can use a KeyBinding to register an operation with the KeyboardController class. This is a singleton class that manages the current bindings in your application. It has several methods that are also pretty clear:
 
@@ -27,11 +17,7 @@ public void register(final KeyBinding binding, final Action action)
 public void register(final KeyBinding binding, final Task task)
 }}}
 
-The first method registers a BoundWidget. This will take the Action assigned to the BoundWidget, and invoke the execute() method with the widget as the argument. The second takes an Action class and invokes its execute() method with a null argument. This can be useful for Action classes that encapsulate their own state by capturing object references on the set() method. The final version takes a Task interface implementation that has a single {{{public void run()}}} block. This is the catch-all implementation you can do whatever you want with.
-
-= The Gwittir Widgets =
-
-The core Gwittir widgets all implement the KeyBoundWidget interface. This adds a single keyBinding property that you can set on the widgets as you are building them. They will then register this binding with the KeyboardController as part of their attach/detach lifecycle, using the {{{register(KeyBinding, BoundWidget)}}} to add themselves to the current context. This, by the by, is the recommended way your widgets should register their own bindings. The reason for this should be apparent in the next section.
+The first method registers a BoundWidget. This will take the Action assigned to the BoundWidget, and invoke the execute() method with the widget as the argument. The second  ndings. The reason for this should be apparent in the next section.
 
 = Binding Suggestions =
 
@@ -60,9 +46,7 @@ final Button suggest = new Button("Suggest");        //create the button
                     auto.binding.addKeyBindingEventListener( //add an listener for unbind
                       new KeyBindingEventListener(){
                         public void onUnbind(KeyBinding binding) {
-                        }
-                        
-                        public void onBind(KeyBinding binding) { // when the key is 
+                                                                 // when the key is 
                                                                  // cleared, repeat the 
                                                                  // process until a match
                                                                  // is found, or not
@@ -75,6 +59,9 @@ final Button suggest = new Button("Suggest");        //create the button
                                 suggest.setValue( suggest.getValue() );
                             }
                             
+                        }
+                        
+                        public void onBind(KeyBinding binding) { 
                         }
                         
                     });
