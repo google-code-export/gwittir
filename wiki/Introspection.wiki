@@ -10,7 +10,7 @@ One of the problems with making developer friendly API's in GWT is the lack of t
 
 To use Gwittir's Introspector, you simply need to tag your class with the com.totsp.gwittir.client.beans.Introspectable interface. This will tell Gwittir's rebind library to build out the needed classes for your Introspectable classes at compile time. 
 
-You should note: the compile time generation is done ENTIRELY based on the get/is/set naming convention. If you use a BeanInfo implementation for your Java code, it will not be honored at this time. Support for this might come in the future, but our initial implementation of this function ran into problems with the way the GWTCompiler runs.
+You should note: the compile time generation is done ENTIRELY based on the get/is/set naming convention (the standard Java idiom). If you use a BeanInfo implementation for your Java code, it will not be honored at this time. Support for this might come in the future, but our initial implementation of this function ran into problems with the way the GWTCompiler runs.
 
 Once this is done, you can use the Introspector to find properties on your beans:
 
