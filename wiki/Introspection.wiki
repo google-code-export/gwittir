@@ -74,7 +74,7 @@ public class Product implements HasName, Introspectable {
   public void setUPC(String upc){...}
 }
 
-public class Book extends Product, Introspectable {
+public class Book extends Product {
   //...
   public String getISBN(){...}
   //...
