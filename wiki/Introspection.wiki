@@ -3,7 +3,7 @@
 
 = Introduction =
 
-One of the problems with making developer friendly API's in GWT is the lack of the Reflection capabilities in standard Java. While a full Java-compatible reflection API would be ideal, it is both a large and complex API and hard to break up into small implementations. To this end, Gwittir provides a "Just enough" Java Beans style Introspector that is assembled at compile time.
+One of the problems with making developer friendly API's in GWT is the lack of the Reflection capabilities that are present in standard Java. While a full Java-compatible reflection API would be ideal, it is both a large and complex API and hard to break up into small implementations. To this end, Gwittir provides a "Just enough" Java Beans style Introspector that is assembled at compile time.
 
 
 = Enabling Introspection for Your Classes =
