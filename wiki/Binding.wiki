@@ -84,6 +84,7 @@ If you have an array of Bindables or a Collection of Bindables, you can use the 
         mark.setChildren(children);
         b = new Binding(secondChildName /*pretend this is a Label */, "value", 
                         mark, "children[2].firstName"); // Note this
+        b.setLeft();
         b.bind();
 }}}
 
