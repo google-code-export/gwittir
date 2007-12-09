@@ -58,6 +58,49 @@ The Binding object also has a List of Child bindings that can be controlled with
 
 Actions will now cascade into the the child bindings. This allows you to easily clean up listeners and release bindings.
 
+When specifying a property for binding, you can use a limited syntax to crawl down the object graph to, for instance, bind a Label's value to a property on a child object. The simplest form of this is to use the dot notation in the property:
+
+{{{
+        Person mark = new Person("Mark", "Lanford", 31);
+        mark.setSpouse(new Person("Benay", "Krissel", 37));
+        Label spouseName= new Label();
+        Binding b = new Binding(spouseName, "value", 
+                                mark, "spouse.firstName"); //Note this
+        b.setLeft();
+        b.bind();
+
+}}}
+
+This will establish a binding between the value property of spouceName to the firstName property _of the object from the roots .getSpouse() method_. This means that all the objects you intend to traverse here have to implement Bindable, with two exceptions: Arrays and Collections. 
+
+If you have an array of Bindables or a Collection of Bindables, you can use the limited selection syntax to bind to specific objects in the collection. For example:
+
+{{{
+
+        Person[] children = {new Person("Delaney", "Krissel", 12),
+            new Person("Jonny", "Doe", 1),
+            new Person("Jenny", "Nobody", 3)
+        };
+        mark.setChildren(children);
+        b = new Binding(secondChildName /*pretend this is a Label */, "value", 
+                        mark, "children[2].firstName"); // Note this
+        b.bind();
+}}}
+
+This says bind to the Bindable in position 2 on the array. This simple index works in the standard way for arrays, or will retrieve the second index value from an Iterator on a collection.
+
+The second form of selector you can use is the simple String equality selector. This allows you to perform a simple comparison of a String value to the .toString() value of a property. For example:
+
+{{{
+   b = new Binding(doesFirstName, "value", 
+                   mark, "children[lastName=Doe].firstName"); //Note this
+
+}}}
+
+This will bind to the first instance in the children property whose lastName property is "Doe". In this case, it is exactly the same as using [1], since the [1] index position contains Jonny Doe.
+
+This is a very basic evaluation here. You can't select sub-properties in the selector. There is no != > < >= <= operations, etc. 
+
 You can also specify Converter implementation to adapt properties between differing types. The Converter interface is very simple:
 
 {{{
