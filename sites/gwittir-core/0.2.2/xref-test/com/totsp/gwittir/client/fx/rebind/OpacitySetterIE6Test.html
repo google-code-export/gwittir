@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<title>OpacitySetterIE6Test xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
+</head>
+<body>
+<pre>
+
+<a name="1" href="#1">1</a>   <em class="jxr_comment">/*</em>
+<a name="2" href="#2">2</a>   <em class="jxr_comment"> * OpacitySetterIE6Test.java</em>
+<a name="3" href="#3">3</a>   <em class="jxr_comment"> * JUnit based test</em>
+<a name="4" href="#4">4</a>   <em class="jxr_comment"> *</em>
+<a name="5" href="#5">5</a>   <em class="jxr_comment"> * Created on August 3, 2007, 8:12 PM</em>
+<a name="6" href="#6">6</a>   <em class="jxr_comment"> */</em>
+<a name="7" href="#7">7</a>   
+<a name="8" href="#8">8</a>   <strong class="jxr_keyword">package</strong> com.totsp.gwittir.client.fx.rebind;
+<a name="9" href="#9">9</a>   
+<a name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> junit.framework.TestCase;
+<a name="11" href="#11">11</a>  
+<a name="12" href="#12">12</a>  <em class="jxr_javadoccomment">/**</em>
+<a name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> *</em>
+<a name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * @author cooper</em>
+<a name="15" href="#15">15</a>  <em class="jxr_javadoccomment"> */</em>
+<a name="16" href="#16">16</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> OpacitySetterIE6Test <strong class="jxr_keyword">extends</strong> TestCase {
+<a name="17" href="#17">17</a>      
+<a name="18" href="#18">18</a>      <strong class="jxr_keyword">public</strong> OpacitySetterIE6Test(String testName) {
+<a name="19" href="#19">19</a>          <strong class="jxr_keyword">super</strong>(testName);
+<a name="20" href="#20">20</a>      }
+<a name="21" href="#21">21</a>  
+<a name="22" href="#22">22</a>      
+<a name="23" href="#23">23</a>      <em class="jxr_javadoccomment">/**</em>
+<a name="24" href="#24">24</a>  <em class="jxr_javadoccomment">     * Test of parseOrReplace method, of class com.totsp.gwittir.client.fx.rebind.OpacitySetterIE6.</em>
+<a name="25" href="#25">25</a>  <em class="jxr_javadoccomment">     */</em>
+<a name="26" href="#26">26</a>          <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testParseOrReplace(){
+<a name="27" href="#27">27</a>          String test1 = <span class="jxr_string">"alpha(opacity=25)"</span>;
+<a name="28" href="#28">28</a>          <strong class="jxr_keyword">this</strong>.assertEquals( <span class="jxr_string">"25"</span>, OpacitySetterIE6.parseOrReplace( test1, <strong class="jxr_keyword">null</strong> ) );
+<a name="29" href="#29">29</a>          String replaced1 = OpacitySetterIE6.parseOrReplace( test1, <span class="jxr_string">"40"</span> );
+<a name="30" href="#30">30</a>          <strong class="jxr_keyword">this</strong>.assertEquals(<span class="jxr_string">"alpha(opacity=40)"</span>, replaced1 );
+<a name="31" href="#31">31</a>          String test2 = <span class="jxr_string">"foo(bar=20,baz=100) alpha(opacity=25)"</span>;
+<a name="32" href="#32">32</a>          String replaced2 = OpacitySetterIE6.parseOrReplace( test2, <span class="jxr_string">"50"</span>);
+<a name="33" href="#33">33</a>          <strong class="jxr_keyword">this</strong>.assertEquals(<span class="jxr_string">"foo(bar=20,baz=100) alpha(opacity=50)"</span>, replaced2 );
+<a name="34" href="#34">34</a>          String test3 = <span class="jxr_string">""</span>;
+<a name="35" href="#35">35</a>          String replaced3 = OpacitySetterIE6.parseOrReplace( test3, <span class="jxr_string">"60"</span>);
+<a name="36" href="#36">36</a>          <strong class="jxr_keyword">this</strong>.assertEquals(<span class="jxr_string">"alpha(opacity=60)"</span>, replaced3 );
+<a name="37" href="#37">37</a>          
+<a name="38" href="#38">38</a>          String test4 = <span class="jxr_string">"foo(bar=100,baz=200)"</span>;
+<a name="39" href="#39">39</a>          String replaced4 = OpacitySetterIE6.parseOrReplace( test4, <span class="jxr_string">"60"</span>);
+<a name="40" href="#40">40</a>          <strong class="jxr_keyword">this</strong>.assertEquals( test4 + replaced3, replaced4 );
+<a name="41" href="#41">41</a>          
+<a name="42" href="#42">42</a>          String test5 =  <span class="jxr_string">"alpha(foo=25)"</span>;
+<a name="43" href="#43">43</a>          String replaced5 = OpacitySetterIE6.parseOrReplace( test5, <span class="jxr_string">"60"</span>);
+<a name="44" href="#44">44</a>          <strong class="jxr_keyword">this</strong>.assertEquals(<span class="jxr_string">"alpha(opacity=60,foo=25)"</span>, replaced5 );
+<a name="45" href="#45">45</a>          
+<a name="46" href="#46">46</a>      }
+<a name="47" href="#47">47</a>      
+<a name="48" href="#48">48</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
