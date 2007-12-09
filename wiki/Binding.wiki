@@ -275,6 +275,8 @@ BoundWidgets also have 2 other properties that may, or may not, be used by vario
 Obviously, because we want to do Binding with BoundWidgets, they all implement the Bindable interface.
 
 
+It is worth noting that the excessive use of Object as a property type here is sub-optimal. Frankly, we are waiting for GWT 1.5 with generics, at which time we can genericize the classes to provide better type safety and less casting when working with BoundWidgets.
+
 = BindingActions =
 
 The most common type of Action you will use is the BindingAction. In addition to .execute(), the BindingAction contains 3 methods that represent the lifecycle of a BoundWidget on the screen.
