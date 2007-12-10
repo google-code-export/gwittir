@@ -71,7 +71,7 @@ When specifying a property for binding, you can use a limited syntax to crawl do
 
 }}}
 
-This will establish a binding between the value property of spouceName to the firstName property _of the object from the roots .getSpouse() method_. This means that all the objects you intend to traverse here have to implement Bindable, with two exceptions: Arrays and Collections. 
+This will establish a binding between the value property of spouceName to the firstName property _of the object from the roots .getSpouse() method_. However, the binding will watch all the properties you move through and keep track of changes. So if you change the spouse property on the root object, it will unbind from the old one, rebind to the new one, and reissue the last setLeft()/setRight() method you called to get the relationships into the appropriate state. This means that all the objects you intend to traverse here have to implement Bindable, with two exceptions: Arrays and Collections. 
 
 If you have an array of Bindables or a Collection of Bindables, you can use the limited selection syntax to bind to specific objects in the collection. For example:
 
