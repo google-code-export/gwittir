@@ -1,0 +1,12 @@
+com.totsp.gwittir
+com.totsp.gwittir.client.beans
+com.totsp.gwittir.client.fx.rebind
+com.totsp.gwittir.client.testmodel
+com.totsp.gwittir.client.ui.calendar
+com.totsp.gwittir.client.util
+com.totsp.gwittir.client.util.compress
+com.totsp.gwittir.client.validator
+com.totsp.gwittir.mapping
+com.totsp.gwittir.ui
+test.destination
+test.source
