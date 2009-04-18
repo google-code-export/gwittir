@@ -32,6 +32,8 @@ void execute(ListViewWidget widget){
 
 When you call FlowController.call() the flow controller will crawl up the display tree until it finds the first context with the given name from the widget you pass as the first argument. This means you can have nested flow contexts in you app and they will be managed properly even if there are naming collisions.
 
+=Managing History=
+
 You will notice the "false" at the end of the first call. This tells the FlowController that this is an initialization state. That is, it doesn't notify its HistoryManager implementation. HistoryManagers are classes you can register with the FlowController to deal with the GWT History and FlowController state.  A HandyClass is the SimpleSessionHistoryManager. You can enable Back/Forward button support in your FlowController managed app with one line of code:
 
 {{{
