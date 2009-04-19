@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>run</actionName>
+            <goals>
+                <goal>gwt-maven:gwt</goal>
+            </goals>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <google.webtoolkit.compileSkip>true</google.webtoolkit.compileSkip>
+                <google.webtoolkit.testSkip>true</google.webtoolkit.testSkip>
+            </properties>
+        </action>
+        <action>
+            <actionName>test</actionName>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <properties>
+                <google.webtoolkit.compileSkip>true</google.webtoolkit.compileSkip>
+            </properties>
+        </action>
+        <action>
+            <actionName>CUSTOM-gwt-compile</actionName>
+            <displayName>gwt-compile</displayName>
+            <goals>
+                <goal>compile</goal>
+                <goal>gwt-maven:compile</goal>
+            </goals>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+                <google.webtoolkit.skipTest>true</google.webtoolkit.skipTest>
+            </properties>
+        </action>
+    </actions>
