@@ -32,9 +32,9 @@ public class Foo implements Serializable {
 
 }}}
 
-This class must have the @Introspectable annotation, or be included in the gwittir-inrospection.properties file.
+This class must have the @Introspectable annotation, or be included in the gwittir-inrospection.properties file and have a no-args constructor. 
 
-Next, create the codec interface. The actual codec will be generated, so all you really need to do is create a marker interface:
+Next, create the codec interface.  Because we are using the Gwittir introspection system, objects will be created and have their properties set through the getters and setters. The actual codec will be generated, so all you really need to do is create a marker interface:
 
 {{{
 
