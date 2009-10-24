@@ -1,5 +1,7 @@
 #summary A Look at the Gwittir REST Client support
 
+Please note the REST API is still under active development and, while usable, should be considered experimental.
+
 = Goals =
 
 The primary goal of the REST client is to be as flexible as you need it to be. It is my personal experience that GWT RPC is fairly brittle code and not easy to bend if you have a special case. The Gwittir REST client attempts to correct these failings, in the REST type model. The ways we address this are:
