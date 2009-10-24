@@ -79,7 +79,7 @@ And we are done! Start making calls to your service:
         myFoo.setStringProperty("A String property.");
         myFoo.setIntProperty( 404 );
         myFoo.setChildren( Arrays.asList( new Foo(), new Foo() ));
-
+        FooService service = new FooService();
         service.put("myFoo", myFoo, new AsyncCallback<String>(){
 
             public void onFailure(Throwable caught) {
