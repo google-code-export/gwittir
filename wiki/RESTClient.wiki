@@ -7,6 +7,7 @@ The primary goal of the REST client is to be as flexible as you need it to be. I
   * Everything is pluggable:  Transports, Codecs, etc
   * Everything has plenty of hooks to change behavior: (Alter the RequestBuilder before requests are sent)
   * Services are created by composition, making them Guice/Gin friendly.
+  * Everything is easily "decoratable" to support things like HTML5/Gears persistence and synchronization.
 
 
 = The Basic Example =
