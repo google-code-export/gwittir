@@ -6,6 +6,8 @@
 Of course, once the GWT Introspection system was in place, the next step is to come up with a binding framework. One of the great problems with building GWT applications is dealing with a great number of Listeners to handle simple binding for widgets. Gwittir provides a shorthand way for doing this.
 
 
+While you should continue to read this document, be sure to check out the BindingBuilder page for an easy way to construct complex bindings.
+
 = Requirements for Binding =
 
 The simplest way to to enable Binding on your classes is to implement the com.totsp.gwittir.beans.Bindable interface. This interface defines, simply:
