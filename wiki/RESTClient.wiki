@@ -153,3 +153,43 @@ Now, lets just create a service and make a call:
 }}}
 
 Since no code has to be generated for the JSONOverlayCodec type, you simply create one directly with a type param of your JavaScriptObject overlay type.
+
+
+= Pre and Post Hooks=
+
+For the transports that extend HTTPTransport -- that is, the ones that are based on the plain GWT XHR wrapper libraries -- you can provide PreHook and PostHook implementations. Lets say, for example, you wanted to support a call id/next call id security system on the server. You could do this by saying:
+
+{{{
+public class CallIdHook implements PreHook, PostHook {
+
+    private String callId;
+
+    public CallIdHook(String initialCallId){
+        this.callId = initialCallId;
+    }
+
+    public RequestBuilder beforeSend(RequestBuilder builder) {
+        builder.setHeader("X-Call-Id", callId);
+        return builder;
+    }
+
+    public Response afterReceive(Response response) {
+        this.callId = response.getHeader("X-Next-Call-Id");
+        return response;
+    }
+
+}
+
+//----
+         XHRTransport transport = new XHRTransport();
+         CallIdHook hook = new CallIdHook("first");
+         transport.setPreHook(hook);
+         transport.setPostHook(hook);
+         SimpleRESTService<FooOverlay> overlayService = new SimpleRESTService<FooOverlay>();
+        overlayService.setBaseURL(GWT.getModuleBaseURL()+"../api/foos/");
+        overlayService.setCodec( new JSONOverlayCodec<FooOverlay>() );
+        overlayService.setTransport(transport );
+
+}}}
+
+Now all calls through the service will store the resultant next callback. Obviously this is flawed because if you make multiple calls you will need to queue them so they don't return out of order. This is beyond the scope of this example, however, you could implement this as a new Transport implementation as well.
