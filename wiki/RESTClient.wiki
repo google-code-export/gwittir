@@ -1,0 +1,155 @@
+#summary A Look at the Gwittir REST Client support
+
+= Goals =
+
+The primary goal of the REST client is to be as flexible as you need it to be. It is my personal experience that GWT RPC is fairly brittle code and not easy to bend if you have a special case. The Gwittir REST client attempts to correct these failings, in the REST type model. The ways we address this are:
+
+  * Everything is pluggable:  Transports, Codecs, etc
+  * Everything has plenty of hooks to change behavior: (Alter the RequestBuilder before requests are sent)
+  * Services are created by composition, making them Guice/Gin friendly.
+
+
+= The Basic Example =
+
+The first step in making a REST client is to create a service handle for you objects. To get started, you first need a codec. There are only 2 basic codecs included right now: JSONCodec, for use with the Gwittir introspection system, and JSONOverlayCodec, which uses JavaScriptObjectOverlay types. We will start with the first type.
+
+First, a data class:
+
+{{{
+package com.totsp.gwittir.restsample.shared;
+
+import com.totsp.gwittir.client.beans.annotations.Introspectable;
+import java.io.Serializable;
+import java.util.List;
+
+@Introspectable
+public class Foo implements Serializable {
+    private List<Foo> children;
+    private String stringProperty;
+    private int intProperty;
+
+//.. getters and setters truncated.
+
+}}}
+
+This class must have the @Introspectable annotation, or be included in the gwittir-inrospection.properties file.
+
+Next, create the codec interface. The actual codec will be generated, so all you really need to do is create a marker interface:
+
+{{{
+
+
+package com.totsp.gwittir.restsample.client;
+
+import com.totsp.gwittir.restsample.shared.Foo;
+import com.totsp.gwittir.serial.json.client.JSONCodec;
+
+public interface FooCodec extends JSONCodec<Foo> {
+
+}
+
+}}}
+
+Next, we create our service. Here I am setting hard parameters in the constructor, but each of these could be @Named parameters for a Gin config:
+
+{{{
+package com.totsp.gwittir.restsample.client;
+
+import com.google.gwt.core.client.GWT;
+import com.totsp.gwittir.rest.client.SimpleRESTService;
+import com.totsp.gwittir.rest.client.transports.XHRTransport;
+import com.totsp.gwittir.restsample.shared.Foo;
+
+public class FooService extends SimpleRESTService<Foo> {
+
+    public FooService(){
+        this.setBaseURL(GWT.getModuleBaseURL()+"../api/foos/");
+        this.setCodec( (FooCodec) GWT.create(FooCodec.class ));
+        this.setTransport(new XHRTransport() );
+    }
+
+}
+}}}
+
+Here we are using the basic XHRTransport. We will talk about the other transports later.
+
+And we are done! Start making calls to your service:
+{{{
+        Foo myFoo = new Foo();
+        myFoo.setStringProperty("A String property.");
+        myFoo.setIntProperty( 404 );
+        myFoo.setChildren( Arrays.asList( new Foo(), new Foo() ));
+
+        service.put("myFoo", myFoo, new AsyncCallback<String>(){
+
+            public void onFailure(Throwable caught) {
+                Window.alert( ""+ caught );
+            }
+
+            public void onSuccess(String result) {
+                Window.alert(result);
+            }
+            
+        });
+}}}
+
+Here we are passing in a "key" for the object, so the object becomes /api/foos/myFoo. Not all REST type services work this way, so the callback takes a String value as a result. This string value will, if available be:
+
+  * The "Location" header field returned from the call, if a new URI is generated and returned as a redirect.
+  * The text of the response payload.
+
+So, for instance, if I wanted to create a new foo that got an automatic URI, I would say: 
+{{{
+            service.put(null myFoo, new AsyncCallback<String>(){
+
+            public void onFailure(Throwable caught) {
+                Window.alert( ""+ caught );
+            }
+
+            public void onSuccess(String result) {
+                Window.alert(result); //
+            }
+            
+}}}
+And I would expect the result to be "/api/foos/1234".
+
+= The JSONOverlay Example =
+
+Lets do the same thing with a JSONOverlay type. First, we need a new data class. This is obviously limited, but serves as an example:
+
+{{{
+public class FooOverlay extends JavaScriptObject {
+
+    protected FooOverlay(){
+
+    }
+
+
+    public final native String getStringProperty()/*-{ return this.stringProperty; }-*/;
+
+    public final native int getIntProperty()/*-{ return this.intProperty; }-*/;
+
+}
+
+}}}
+
+Now, lets just create a service and make a call:
+
+{{{
+        SimpleRESTService<FooOverlay> overlayService = new SimpleRESTService<FooOverlay>();
+        overlayService.setBaseURL(GWT.getModuleBaseURL()+"../api/foos/");
+        overlayService.setCodec( new JSONOverlayCodec<FooOverlay>() );
+        overlayService.setTransport(new XHRTransport() );
+        overlayService.get("myFoo", new AsyncCallback<FooOverlay>(){
+
+            public void onFailure(Throwable caught) {
+                Window.alert(""+caught);
+            }
+
+            public void onSuccess(FooOverlay result) {
+                Window.alert(result.getStringProperty() +" "+ result.getIntProperty() );
+            }
+       });
+}}}
+
+Since no code has to be generated for the JSONOverlayCodec type, you simply create one directly with a type param of your JavaScriptObject overlay type.
