@@ -196,3 +196,18 @@ public class CallIdHook implements PreHook, PostHook {
 }}}
 
 Now all calls through the service will store the resultant next callback. Obviously this is flawed because if you make multiple calls you will need to queue them so they don't return out of order. This is beyond the scope of this example, however, you could implement this as a new Transport implementation as well.
+
+= X-REST =
+
+Because some older browsers do not support PUT and DELETE methods, the REST API includes a method for forging the methods using the X-REST-Method header. To use the X-REST support, two steps are needed. First, use the XRESTTransport() rather than the XHRTransport in your services. This will replace the PUT and DELETE methods with POST and GET methods respectively, and add the X-REST header. Next you need to apply the XRESTFilter to your REST services on the server side, thusly:
+
+{{{
+     <filter>
+        <filter-name>x-rest</filter-name>
+        <filter-class>com.totsp.gwittir.rest.server.XRESTFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>x-rest</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
+}}}
