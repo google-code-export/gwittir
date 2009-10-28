@@ -103,7 +103,7 @@ Here we are passing in a "key" for the object, so the object becomes /api/foos/m
 
 So, for instance, if I wanted to create a new foo that got an automatic URI, I would say: 
 {{{
-            service.put(null myFoo, new AsyncCallback<String>(){
+            service.post(null, myFoo, new AsyncCallback<String>(){
 
             public void onFailure(Throwable caught) {
                 Window.alert( ""+ caught );
