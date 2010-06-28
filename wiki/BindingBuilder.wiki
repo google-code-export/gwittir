@@ -1,4 +1,5 @@
 #summary Building bindings with BindingBuilder
+#labels Featured
 
 = Introduction =
 
@@ -41,5 +42,3 @@ At each set, the method calls return a limited interface that only exposes the n
 The important thing to remember is when you are appending bindings, to finish with .toBinding(). This commits the binding being constructed and performs the append. 
 
 The binding builder supports Converters and Validators and all the other features of the binding system in a much easier to use form.
-
-
