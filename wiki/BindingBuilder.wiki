@@ -17,11 +17,10 @@ Binding b =  BindingBuilder.bind(leftObject])
                           .onLeftProperty("firstName")
                           .toRight(rightObject])
                           .onRightProperty("firstName")
-                          .toBinding();
+// When done:             .toBinding();
+//You can also replace toBinding() with .and() to do additional bindings:
 
-// subsequent bindings:
-
- BindingBuilder.appendChildToBinding(b)
+                      .and()
                       .bindLeft(johnny)
                       .onLeftProperty("firstName")
                       .toRight(delaney)
